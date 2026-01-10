@@ -1,0 +1,15 @@
+[Unit]
+Description=Tiny Go webserver that prints OS information and HTTP request to output.
+
+[Container]
+Image=ghcr.io/traefik/whoami:v1.11
+ContainerName=whoami
+ReadOnly=true
+Label="traefik.enable=true"
+Label="traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target default.target

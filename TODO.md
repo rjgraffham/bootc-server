@@ -1,0 +1,4 @@
+- [ ] Switch to cross-platform Justfile
+- [ ] Add arm64 build
+- [ ] Add checks for build prerequisites
+- [ ] Prettify build status

@@ -1,0 +1,21 @@
+[Unit]
+Description=Tiny Go webserver that prints OS information and HTTP request to output.
+
+[Container]
+Image=ghcr.io/traefik/traefik:v3.6
+Exec=--api.dashboard --entryPoints.web.address=:80 --providers.docker.exposedByDefault=false
+PublishPort=80:80
+PublishPort=8080:8080
+ContainerName=traefik
+ReadOnly=true
+Volume=/run/podman/podman.sock:/var/run/docker.sock
+SecurityLabelDisable=true
+Label="traefik.enable=true"
+Label="traefik.http.routers.dashboard.rule=Host(`traefik.localhost`)"
+Label="traefik.http.routers.dashboard.service=api@internal"
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target default.target
