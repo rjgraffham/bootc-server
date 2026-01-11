@@ -1,9 +1,35 @@
 # Project TODO List
 
+- [x] Deploy containerized Traefik with routing to other containers
+- [x] Create script to build bootable VM image
 - [ ] Switch to cross-platform Justfile
-- [ ] Add arm64 build
+- [ ] Add rpi4 (arm64) build, via flashable image
 - [ ] Add checks for build prerequisites
-- [ ] Prettify build status
+- [ ] Prettify display of build progress
+- [ ] Figure out how I want to handle secrets
+- [ ] Determine a directory layout for persistent data that will be mounted into containers
+    - This comes in two kinds - container state (base containers are all set readonly) and literal files (e.g., static sites, syncthing storage)
+    - By having all persistent data under one tree, backing up the server's state is simplified to backing up that tree.
 - [ ] Enable TLS
     - [ ] Set up automatic cert renewal for public services
 - [ ] Set up pushing to a registry, to enable the image to update itself from that registry
+- [ ] Migrate existing services from my NixOS setup:
+    - [ ] Calibre-Web
+    - [ ] Home Assistant
+    - [ ] Miniflux
+    - [ ] *possibly* Munin (but looking into viability of replacing it with Grafana and an as yet undecided metrics backend)
+    - [ ] Navidrome
+    - [ ] ntfy.sh
+    - [ ] Pinchflat
+    - [ ] static sites
+    - [ ] Syncthing
+    - [ ] Tailscale
+        - NOTE: This will likely need to live in the host OS if I expect to be able to access that. However, I also want to look into the viability of tailscale sidecars for containers running service I only want to expose to my tailnet.
+- [ ] Set up additional services:
+    - [ ] Immich
+    - [ ] Authentik for SSO and authorization
+        - [ ] Integrate into Traefik
+        - [ ] Investigate which services I'm already running can be configured to get account credentials from the Traefik+Authentik combo
+    - [ ] Forgejo
+        - [ ] Look into requirements for Forgejo Actions
+    - [ ] Audiobookshelf
