@@ -7,6 +7,7 @@
 - [ ] Add checks for build prerequisites
 - [ ] Prettify display of build progress
 - [ ] Figure out how I want to handle secrets
+    - Ideally it would be possible to version them along with the system. However, building them into the image would mean it cannot be pushed to a public registry, which might complicate deployment. Therefore, if I can set things up so that secrets can be deployed out of band while still being version controlled, that would be preferable.
 - [ ] Determine a directory layout for persistent data that will be mounted into containers
     - This comes in two kinds - container state (base containers are all set readonly) and literal files (e.g., static sites, syncthing storage)
     - By having all persistent data under one tree, backing up the server's state is simplified to backing up that tree.
