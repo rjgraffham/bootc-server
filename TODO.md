@@ -22,6 +22,7 @@
     - [ ] Navidrome
     - [ ] ntfy.sh
     - [ ] Pinchflat
+        - This should wait until Authentik has been deployed, so as to avoid needing to use basic auth as my current setup does.
     - [ ] static sites
     - [ ] Syncthing
     - [ ] Tailscale
