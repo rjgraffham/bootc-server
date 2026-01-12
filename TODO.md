@@ -8,6 +8,13 @@
 - [ ] Prettify display of build progress
 - [ ] Figure out how I want to handle secrets
     - Ideally it would be possible to version them along with the system. However, building them into the image would mean it cannot be pushed to a public registry, which might complicate deployment. Therefore, if I can set things up so that secrets can be deployed out of band while still being version controlled, that would be preferable.
+    - My current thinking is to take an as-public-as-possible approach:
+        - Base system image is fully public and contains no secrets, but *can* assume that secrets and other private data exists at certain paths under /var or /etc (depending on the nature of the secret/data) in the actual booted system.
+        - Private installer/disk image is built by a public build script, but incorporates secrets/data files that are private and not committed.
+        - Once installed, those secrets/data become the mutable portion of the system, and will be the only part backed up (privately), while the system underneat it is updated from a public image in a public registry.
+        - If (and only if) an update requires that a base image update and a data/secret update occur in complete lockstep, a new installer/disk image will be produced and used to do a complete reinstall.
+            - However, ideally it should generally be possible to simply set up new secrets/data that are not yet used, and then deploy the services that will use them, so this should not be a common occurrence.
+        - This ensures that the vast majority of the system is fully version controlled, and while the secrets/data files are not strictly versioned, it still ensures that any particular installer/disk image will always produce a consistent combination of base system and data, allowing for some degree of full system rollback. (Base-only or data-only rollback should already be accounted for by bootc rollback and use of a versioned backup system, respectively).
 - [ ] Determine a directory layout for persistent data that will be mounted into containers
     - This comes in two kinds - container state (base containers are all set readonly) and literal files (e.g., static sites, syncthing storage)
     - By having all persistent data under one tree, backing up the server's state is simplified to backing up that tree.
