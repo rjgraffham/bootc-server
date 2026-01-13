@@ -1,5 +1,5 @@
 [Unit]
-Description=Tiny Go webserver that prints OS information and HTTP request to output.
+Description=Traefik load balancer/proxy
 
 [Container]
 Image=ghcr.io/traefik/traefik:v3.6
