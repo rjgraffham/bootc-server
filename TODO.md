@@ -10,6 +10,7 @@
     - Ideally it would be possible to version them along with the system. However, building them into the image would mean it cannot be pushed to a public registry, which might complicate deployment. Therefore, if I can set things up so that secrets can be deployed out of band while still being version controlled, that would be preferable.
     - My current thinking is to take an as-public-as-possible approach:
         - Base system image is fully public and contains no secrets, but *can* assume that secrets and other private data exists at certain paths under /var or /etc (depending on the nature of the secret/data) in the actual booted system.
+            - The majority of secrets will be for the containerized services, so these can be deployed via podman secrets, as long as it's possible to deploy those from an anaconda kickstart and/or inject them into a disk image (it should be, but needs further investigation)
         - Private installer/disk image is built by a public build script, but incorporates secrets/data files that are private and not committed.
         - Once installed, those secrets/data become the mutable portion of the system, and will be the only part backed up (privately), while the system underneat it is updated from a public image in a public registry.
         - If (and only if) an update requires that a base image update and a data/secret update occur in complete lockstep, a new installer/disk image will be produced and used to do a complete reinstall.
